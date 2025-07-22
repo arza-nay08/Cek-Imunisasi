@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cek Jadwal Imunisasi Anak</title>
+  <style>
+    body { font-family: Arial; padding: 30px; }
+    input, button { margin: 10px 0; padding: 10px; }
+  </style>
+</head>
+<body>
+  <h2>Cek Jadwal Imunisasi Anak</h2>
+  <label for="dob">Masukkan Tanggal Lahir Anak:</label><br>
+  <input type="date" id="dob">
+  <button onclick="cekImunisasi()">Cek Jadwal</button>
+
+  <div id="hasil" style="margin-top: 20px;"></div>
+
+  <script>
+    function cekImunisasi() {
+      const dob = new Date(document.getElementById("dob").value);
+      const today = new Date();
+      const usiaBulan = (today.getFullYear() - dob.getFullYear()) * 12 + (today.getMonth() - dob.getMonth());
+
+      let hasil = `<p>Usia anak: ${usiaBulan} bulan</p><ul>`;
+      const jadwal = [
+        { bulan: 0, vaksin: "Hepatitis B0" },
+        { bulan: 1, vaksin: "BCG + Polio 1" },
+        { bulan: 2, vaksin: "DPT-HB-Hib 1 + Polio 2" },
+        { bulan: 3, vaksin: "DPT-HB-Hib 2 + Polio 3" },
+        { bulan: 4, vaksin: "DPT-HB-Hib 3 + Polio 4" },
+        { bulan: 9, vaksin: "Campak-Rubella 1" },
+        { bulan: 18, vaksin: "DPT-HB-Hib 4 + Campak-Rubella 2" },
+        { bulan: 24, vaksin: "JE (Japanese Encephalitis)" }
+      ];
+
+      jadwal.forEach(j => {
+        if (usiaBulan >= j.bulan) {
+          hasil += `<li>${j.vaksin}</li>`;
+        }
+      });
+
+      hasil += `</ul>`;
+      document.getElementById("hasil").innerHTML = hasil;
+    }
+  </script>
+</body>
+</html>
